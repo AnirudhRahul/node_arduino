@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<body class="m-3">
+
+<h4 class="mt-3" id="status">Status: </h4>
+
+<div class="mt-3">
+  Enter name: <input type="text" id="username" value="">
+</div>
+
+
+<br/>
+<button type="button" class="btn btn-primary" id="start">Start</button>
+<button type="button" class="btn btn-secondary" id="stop">Stop</button>
+
+<br/>
+<h3>Game Log</h3>
+<hr/>
+<div id="gamelog" class="mt-2">
+
+
+</div>
+
+<style>
+#gamelog{
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  height: 400px
+}
+</style>
+
+
+<script>
+  setInterval(function () {
+    fetch('/status', {method: 'get'}).then(function(response) {
+      return response.text().then((text)=>{
+        document.getElementById('status').innerHTML = "Status: " + text.trim()
+      });
+    })
+  }, 1000)
+
+  document.getElementById("start").onclick = (event) =>{
+    username = document.getElementById("username").value
+    if(username.length<2){
+      document.getElementById('gamelog').innerHTML = `<p class="text-danger">Please Enter a valid username</p>` + document.getElementById('gamelog').innerHTML
+      return
+    }
+
+    document.getElementById('username').disabled = true
+    fetch('/start?username='+username, {method: 'get'}).then(function(response) {
+      return response.text().then((text)=>{
+        if(response.status==200){
+          window.password = text
+          document.getElementById('gamelog').innerHTML = `<p> Level Started</p>` + document.getElementById('gamelog').innerHTML
+        }
+        else{
+          document.getElementById('gamelog').innerHTML = `<p class="text-danger">${text}</p>` + document.getElementById('gamelog').innerHTML
+        }
+
+      });
+    })
+  }
+
+  document.getElementById("stop").onclick = (event) =>{
+    fetch('/stop?password='+window.password, {method: 'get'}).then(function(response) {
+      return response.text().then((text)=>{
+        if(response.status==200){
+          window.password = ''
+          document.getElementById('gamelog').innerHTML = `<p> Arduino Response: ${text}</p>` + document.getElementById('gamelog').innerHTML
+        }
+        else{
+          document.getElementById('gamelog').innerHTML = `<p class="text-danger">${text}</p>` + document.getElementById('gamelog').innerHTML
+        }
+
+      });
+    })
+  }
+
+
+</script>
+
+</body>
