@@ -1,7 +1,7 @@
 # Node Arduino
 Simple Nodejs/Express server that communicates to arduino through Serialport
 
-Live Server: http://tame-walrus-36.loca.lt
+Live Server: https://clever-sheep-15.loca.lt
 
 Node Version: v12.18.3
 
