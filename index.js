@@ -13,9 +13,7 @@ myPort.on('open', ()=>{
   const express = require('express')
   const path = require('path')
   const app = express()
-  app.listen(9090, () => {
-    console.log(`Example app listening at http://localhost:9090`)
-  })
+  app.use('/public', express.static('public'));
 
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/index.html'));
@@ -55,10 +53,18 @@ myPort.on('open', ()=>{
       password = ''
       myPort.write("STOP\n")
       serial_handler = (serial_resp)=>{
-        res.send(serial_resp);
+        console.log(serial_resp)
+        res.status(200).send(serial_resp);
+        serial_handler = ()=>{}
       }
     }
 
   })
+
+
+  app.listen(9090, () => {
+    console.log(`Example app listening at http://localhost:9090`)
+  })
+
 
 });

@@ -1,7 +1,7 @@
 # Node Arduino
 Simple Nodejs/Express server that communicates to arduino through Serialport
 
-Live Server: https://51ea8028c486.ngrok.io
+Live Server: http://good-pug-90.loca.lt
 
 Node Version: v12.18.3
 
