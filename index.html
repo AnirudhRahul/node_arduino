@@ -22,7 +22,7 @@ ctx.fillStyle = '#fff';
 ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
 
 
-var client = new WebSocket( 'ws://fe1e1b17d52d.ngrok.io/12345' );
+var client = new WebSocket( 'ws://fe1e1b17d52d.ngrok.io:8084/12345' );
 var player = new jsmpeg(client, {canvas:canvas});
 </script>
 
